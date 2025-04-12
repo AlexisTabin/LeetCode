@@ -1,0 +1,101 @@
+respondent_id,age,consent,feedback_text,satisfaction_score
+1,Thirty,No,Great study!,5
+2,40,No,,unsure
+3,45,N,Great study!,5
+4,Thirty,FALSE,,
+5,35,TRUE,,n/a
+6,30 years,,Too long,unsure
+7,45,FALSE,N/A,very satisfied
+8,45,1,Interesting,5
+9,Thirty,No,Great study!,5
+10,30,1,Great study!,unsure
+11,35,FALSE,,very satisfied
+12,Thirty,,N/A,very satisfied
+13,35,,,
+14,35,Yes,Interesting,
+15,30 years,,Too long,
+16,45,TRUE,,
+17,40,,N/A,
+18,30 years,FALSE,Too long,
+19,30 years,Yes,,n/a
+20,35,FALSE,,very satisfied
+21,,FALSE,Great study!,
+22,45,Y,N/A,very satisfied
+23,30,Yes,Interesting,very satisfied
+24,30 years,FALSE,Too long,4
+25,40,Y,,n/a
+26,,Y,N/A,
+27,,Yes,N/A,5
+28,30,1,,unsure
+29,30 years,TRUE,Great study!,5
+30,40,,Great study!,n/a
+31,45,TRUE,Too long,unsure
+32,25,,,n/a
+33,40,FALSE,N/A,very satisfied
+34,30,No,Interesting,unsure
+35,,Yes,,very satisfied
+36,45,TRUE,Too long,5
+37,40,TRUE,Too long,5
+38,25,FALSE,,unsure
+39,25,1,Too long,unsure
+40,35,Y,,
+41,35,FALSE,,n/a
+42,Thirty,0,,
+43,30,Y,,n/a
+44,30 years,Yes,Too long,
+45,40,Y,Too long,very satisfied
+46,40,1,Great study!,unsure
+47,30 years,Y,Great study!,5
+48,Thirty,Yes,,n/a
+49,,1,Great study!,n/a
+50,,TRUE,,5
+51,Thirty,TRUE,Too long,
+52,,,Great study!,n/a
+53,35,Y,Great study!,very satisfied
+54,40,TRUE,,unsure
+55,Thirty,Yes,N/A,5
+56,40,N,,unsure
+57,30 years,N,,n/a
+58,25,1,Too long,n/a
+59,35,TRUE,,5
+60,45,TRUE,Great study!,very satisfied
+61,35,N,Too long,4
+62,Thirty,TRUE,Too long,5
+63,45,Y,Great study!,4
+64,25,0,,
+65,Thirty,No,Great study!,4
+66,30,,N/A,very satisfied
+67,40,1,Too long,
+68,25,0,Interesting,4
+69,40,N,Interesting,
+70,,TRUE,,4
+71,30,,Great study!,very satisfied
+72,30,TRUE,Great study!,4
+73,25,Yes,,4
+74,30,Yes,,4
+75,45,,,5
+76,30,,Too long,5
+77,40,N,N/A,5
+78,40,,Great study!,very satisfied
+79,Thirty,Y,Too long,
+80,40,TRUE,,n/a
+81,Thirty,0,Great study!,4
+82,40,FALSE,Too long,4
+83,45,,N/A,very satisfied
+84,30 years,1,Too long,4
+85,Thirty,Yes,N/A,5
+86,35,Y,,n/a
+87,,FALSE,N/A,unsure
+88,25,0,Great study!,4
+89,40,FALSE,,5
+90,30,,Great study!,unsure
+91,30 years,N,Interesting,n/a
+92,40,Yes,,unsure
+93,30,Yes,N/A,5
+94,,N,,
+95,,TRUE,,
+96,,No,N/A,unsure
+97,30,Y,,very satisfied
+98,40,Yes,Interesting,unsure
+99,,1,Great study!,4
+100,45,Yes,Too long,4
