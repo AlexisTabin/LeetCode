@@ -7,6 +7,7 @@ import streamlit as st
 
 
 def get_real_time_data(code, selected_station):
+    print("Code : ", code)
     st.subheader(f"📈 Latest Measurements at {selected_station}")
     url = f"https://api.existenz.ch/apiv1/hydro/latest?locations={code}&parameters=temperature,flow&app=WhenToBootle&version=0.0.1"
 
