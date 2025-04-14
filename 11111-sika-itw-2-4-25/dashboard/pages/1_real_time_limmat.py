@@ -7,8 +7,7 @@ import streamlit as st
 
 
 def get_real_time_data(code, selected_station):
-    print("Code : ", code)
-    st.subheader(f"📈 Latest Measurements at {selected_station}")
+    st.subheader(f"Latest measurements at {selected_station}")
     url = f"https://api.existenz.ch/apiv1/hydro/latest?locations={code}&parameters=temperature,flow&app=WhenToBootle&version=0.0.1"
 
     try:
@@ -45,8 +44,8 @@ def get_real_time_data(code, selected_station):
 
 
 def get_date_range_data(code, selected_station):
-    st.subheader(f"📊 Historical Data for {selected_station} (Last 30 Days)")
-    url = f"https://api.existenz.ch/apiv1/hydro/daterange?locations={code}&parameters=temperature,flow&startdate=-30 days&enddate=now&app=my.app.ch&version=1.0.42"
+    st.subheader(f"Historical data for {selected_station} (Last 30 Days)")
+    url = f"https://api.existenz.ch/apiv1/hydro/daterange?locations={code}&parameters=temperature,flow&startdate=-30 days&enddate=now&app=WhenToBootle&version=0.0.1"
 
     try:
         response = requests.get(url)
@@ -85,7 +84,7 @@ def get_date_range_data(code, selected_station):
 
 @st.cache_data(ttl=3600)
 def fetch_station_metadata():
-    url = "https://api.existenz.ch/apiv1/hydro/locations?app=my.app.ch&version=1.0.42"
+    url = "https://api.existenz.ch/apiv1/hydro/locations?app=WhenToBootle&version=0.0.1"
     response = requests.get(url)
     payload = response.json().get("payload", [])
     if not payload:
@@ -95,7 +94,6 @@ def fetch_station_metadata():
         result = []
         for station in payload:
             current_station = payload[station]['details']
-            print("Current : ", current_station)
             if "water-body-name" in current_station:
                 if "limmat" in current_station["water-body-name"].lower():
                     result.append({
@@ -111,7 +109,8 @@ def fetch_station_metadata():
 
 
 def main():
-    st.title("🏞️ Swimming in the Limmat — Real-Time Water Station Data")
+    st.set_page_config(page_title="Real-time data")
+    st.title("Real-time water station data")
 
     df = fetch_station_metadata()
     df = df[df["lat"].notna() & df["lon"].notna()].copy()
@@ -139,11 +138,22 @@ def main():
         tooltip={"text": "{name} ({river})"}
     ))
 
-    selected = st.selectbox("Select a real-time station", df["name"])
+    selected = st.selectbox("Select a station", df["name"])
     station_code = df[df["name"] == selected]["id"].values[0]
 
     get_real_time_data(station_code, selected)
     get_date_range_data(station_code, selected)
+
+    # add a reference to the API website
+    # center the markdown
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            Data provided by the <a href="https://api.existenz.ch/docs/apiv1#/hydro" target="_blank">Existenz API</a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 if __name__ == "__main__":

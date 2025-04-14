@@ -7,18 +7,16 @@ import streamlit as st
 
 st.set_page_config(page_title="Water Treatment Data")
 
-st.title("🚰 Water Treatment Data")
+st.title("Water treatment data")
 
 file_path = os.path.join("data", "water_treatment_data_geocoded.csv")
 if not os.path.exists(file_path):
     st.error("Geolocated water treatment dataset not found.")
 else:
-    # Load and clean data
     df = pd.read_csv(file_path)
     df["Datum"] = pd.to_datetime(df["Datum"], errors="coerce")
     df = df.dropna(subset=["Datum", "Messwert", "lat", "lon"])
 
-    # Build valid combinations only
     valid_combinations = df.groupby(["Standort", "Parameter"])[
         "Messwert"].count()
     valid_combinations = valid_combinations[valid_combinations > 0].reset_index(
@@ -26,19 +24,16 @@ else:
 
     st.sidebar.header("Filter")
 
-    # Select location
     valid_locations = valid_combinations["Standort"].unique()
     selected_location = st.sidebar.selectbox(
         "Location", sorted(valid_locations))
 
-    # Filter parameters based on selected location
     filtered_params = valid_combinations[
         valid_combinations["Standort"] == selected_location
     ]["Parameter"].unique()
     selected_param = st.sidebar.selectbox("Parameter", sorted(filtered_params))
 
-    # Show map at the top
-    st.subheader("🗺️ Water Treatment Locations Map")
+    st.subheader("Water treatment locations map")
     map_df = df[["Standort", "lat", "lon"]].drop_duplicates()
     map_df["color"] = map_df["Standort"].apply(
         lambda x: [255, 0, 0] if x == selected_location else [0, 100, 255]
@@ -68,7 +63,6 @@ else:
         tooltip={"text": "{Standort}"}
     ))
 
-    # Filter the main dataset
     filtered_df = df[
         (df["Standort"] == selected_location) & (
             df["Parameter"] == selected_param)

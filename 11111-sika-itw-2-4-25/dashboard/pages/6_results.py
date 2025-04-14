@@ -6,12 +6,8 @@ import requests
 import streamlit as st
 
 
-# -----------------------------
-# 📁 Load Historical Data
-# -----------------------------
 @st.cache_data
 def load_historical_data():
-    # Load and merge historical temperature and flow data
     temp_dfs, flow_dfs = [], []
     years = range(2020, 2025)
 
@@ -33,30 +29,23 @@ def load_historical_data():
     return full_df
 
 
-# -----------------------------
-# 📊 Monthly Summary Table
-# -----------------------------
 def display_monthly_summary(df):
     summary = df.groupby("Month")["SwimmingPossible"].mean().reset_index()
     summary["Swimming %"] = (summary["SwimmingPossible"] * 100).round(1)
 
-    # Add full month name and order
     summary["MonthName"] = summary["Month"].apply(
         lambda m: pd.to_datetime(f"2023-{m:02d}-01").strftime("%B"))
 
-    # Convert to categorical with correct order
     month_order = ["January", "February", "March", "April", "May", "June",
                    "July", "August", "September", "October", "November", "December"]
     summary["MonthName"] = pd.Categorical(
         summary["MonthName"], categories=month_order, ordered=True)
 
-    # Sort accordingly
     summary = summary.sort_values("MonthName")
 
-    # Show data table
     summary_display = summary[["MonthName",
                                "Swimming %"]].set_index("MonthName")
-    st.subheader("📅 Historical Swimming Possibility by Month")
+    st.subheader("Historical swimming possibility (%) by month")
     with st.expander("View Data", expanded=False):
         st.write(
             "This table shows the percentage of swimming-friendly days for each month.")
@@ -66,7 +55,7 @@ def display_monthly_summary(df):
     import altair as alt
     chart = alt.Chart(summary).mark_bar().encode(
         x=alt.X("MonthName:N", sort=month_order, title="Month"),
-        y=alt.Y("Swimming %:Q", title="Chance of Swimming-Friendly Days"),
+        y=alt.Y("Swimming %:Q", title="Chance of Swimming Days"),
         tooltip=["Swimming %"]
     ).properties(width=700, height=400)
 
@@ -74,7 +63,7 @@ def display_monthly_summary(df):
 
 
 def display_first_swimmable_day(df):
-    st.subheader("📅 Earliest Historical Swimming Day")
+    st.subheader("Earliest historical swimming day")
 
     first = df[df["SwimmingPossible"]].sort_values("Date").head(1)
     if not first.empty:
@@ -87,10 +76,6 @@ def display_first_swimmable_day(df):
         st.warning("No swim-friendly day found in the historical data.")
 
 
-# -----------------------------
-# 🔁 Real-Time Check
-# -----------------------------
-# Default station e.g., Zürich Werdinsel
 def get_real_time_temperature_and_flow(code="2160"):
     url = f"https://api.existenz.ch/apiv1/hydro/latest?locations={code}&parameters=temperature,flow&app=WhenToBootle&version=0.0.1"
 
@@ -120,11 +105,8 @@ def display_today_message(temp, flow):
             f"Not ideal: Water is {temp:.1f}°C and flow is {flow:.1f} m³/s.")
 
 
-# -----------------------------
-# 🚀 MAIN
-# -----------------------------
 def main():
-    st.title("🏁 Swimming Possibility — Results Page")
+    st.title("Swimming Possibilities")
 
     df = load_historical_data()
     display_monthly_summary(df)

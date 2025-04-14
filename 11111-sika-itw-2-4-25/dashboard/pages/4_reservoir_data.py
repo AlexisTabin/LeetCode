@@ -6,33 +6,28 @@ import pydeck as pdk
 import seaborn as sns
 import streamlit as st
 
-st.set_page_config(page_title="Reservoir Data")
+st.set_page_config(page_title="Reservoir data")
 
-st.title("🏞️ Reservoir Data")
+st.title("Reservoir data")
 
-# Load geocoded dataset
 file_path = os.path.join("data", "reservoir_data_geocoded.csv")
 if not os.path.exists(file_path):
     st.error("Geocoded reservoir dataset not found.")
     st.stop()
 
-# Load and clean data
 df = pd.read_csv(file_path)
 df["Datum"] = pd.to_datetime(df["Datum"], errors="coerce")
 df = df.dropna(subset=["Datum", "Messwert", "lat", "lon"])
 
-# Sidebar filter
 st.sidebar.header("Filter")
 valid_zones = df["Zone"].dropna().unique()
 selected_zone = st.sidebar.selectbox("Zone", sorted(valid_zones))
 
-# Filter parameters based on selected zone
 zone_df = df[df["Zone"] == selected_zone]
 valid_params = zone_df["Parameter"].dropna().unique()
 selected_param = st.sidebar.selectbox("Parameter", sorted(valid_params))
 
-# Show map
-st.subheader("🗺️ Reservoir Locations Map")
+st.subheader("Reservoir locations map")
 map_df = df[["Zone", "Standort", "lat", "lon"]].drop_duplicates()
 map_df["color"] = map_df["Zone"].apply(
     lambda z: [255, 0, 0] if z == selected_zone else [0, 100, 255]
@@ -80,7 +75,7 @@ else:
 
 # Correlation Matrix for Limmatzone
 if selected_zone == "Limmatzone":
-    st.write("## 📊 Correlation Matrix for Limmatzone")
+    st.write("## Correlation matrix for Limmatzone")
 
     limmat_df = df[df["Zone"] == "Limmatzone"]
 

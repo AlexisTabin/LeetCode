@@ -23,7 +23,7 @@ def load_yearly_data():
 
 
 def plot_facet_line_by_year():
-    st.subheader("📈 Daily Temperatures – One Chart per Year")
+    st.subheader("Daily temperatures (2020 - Now)")
 
     dfs = load_yearly_data()
     if not dfs:
@@ -39,23 +39,21 @@ def plot_facet_line_by_year():
         facet=alt.Facet("Year:N", columns=2, title=None),
         tooltip=["Date", "Temperature (°C)"]
     ).properties(
-        width=350,  # Increased width for each facet
+        width=350,
         height=150
     ).configure_facet(
-        spacing=10  # Adjust spacing between facets
+        spacing=10
     ).configure_view(
         stroke=None
     )
 
-    # Center the chart using Streamlit's column layout
-    # Adjusted column ratios for more width
     left, center, right = st.columns([1, 20, 1])
     with center:
         st.altair_chart(chart, use_container_width=False)
 
 
 def plot_monthly_avg_altair():
-    st.subheader("📊 Monthly Average Temperatures")
+    st.subheader("Monthly average temperatures")
 
     dfs = load_yearly_data()
     if not dfs:
@@ -89,7 +87,7 @@ def plot_monthly_avg_altair():
 
 
 def plot_yearly_boxplots():
-    st.subheader("📦 Temperature Distribution by Year")
+    st.subheader("Temperature distribution by year")
 
     dfs = load_yearly_data()
     if not dfs:
@@ -98,14 +96,12 @@ def plot_yearly_boxplots():
 
     data = pd.concat(dfs)
 
-    # Define colors
-    box_fill_color = '#1f77b4'  # Blue fill for boxes
-    box_border_color = 'black'  # Black border for boxes
-    median_line_color = 'red'   # Red color for median line
+    box_fill_color = '#1f77b4'
+    box_border_color = 'black'
+    median_line_color = 'red'
 
-    # Create the box plot
     chart = alt.Chart(data).mark_boxplot(
-        size=40,  # Adjust box width
+        size=40,
         color=box_fill_color,
         box=alt.MarkConfig(stroke=box_border_color),
         median=alt.MarkConfig(color=median_line_color)
@@ -121,15 +117,23 @@ def plot_yearly_boxplots():
 
 
 def main():
-    st.title("🌊 Historical Limmat Water Temperatures (2020–2025)")
+    st.title("Historical Limmat water temperatures (2020–2025)")
 
     st.markdown(
-        "Explore temperature trends and distributions across years with aligned comparisons, monthly trends, and boxplots."
+        "Overview of the temperature data for the Limmat river."
     )
 
     plot_facet_line_by_year()
     plot_monthly_avg_altair()
     plot_yearly_boxplots()
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            Data provided by the <a href="https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2243" target="_blank">BAFU</a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 if __name__ == "__main__":

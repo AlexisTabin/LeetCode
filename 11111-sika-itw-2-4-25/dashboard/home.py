@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(page_title="Limmat Swim Watch",
-                   page_icon="💧", layout="wide")
+                   page_icon="💧", layout="wide", initial_sidebar_state="collapsed")
 
 st.title("When to Böötle on the Limmat? 🚢")
 st.markdown("""
@@ -15,16 +15,16 @@ The data insights bring together **real-time data**, **historical trends**, and 
 """)
 
 st.markdown("""
-#### 🌡️ [Real-Time Data](./real_time_temperatures_limmat)
+#### Real-Time Data
 Check the latest temperature and water flow from key stations.
             
-#### 📊 Historical [Flows](./historical_flows_limmat) & [Temperatures](./historical_temperatures_limmat)
+#### Historical Flows & Temperatures
 Dive into daily flow and temperature data from 2020 to 2024. Wondering how this April compares to last year?
 
-#### 🧪 [Reservoir Water Quality](./reservoir_data)
+#### Reservoir Water Quality
 Zoom out and explore biological and chemical indicators from Zürich's reservoirs.
 
-#### 🚰 [Water Treatment Plants](./water_treatment)
+#### Water Treatment Plants
 See what's happening upstream. Latest values from Moos, Lengg, and Hardhof treatment stations.
 
 ---
